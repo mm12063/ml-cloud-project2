@@ -9,6 +9,11 @@ Vagrant.configure("2") do |config|
         source: file_loc, destination: file_loc
   end
 
+  file_loc = "~/.ssh/id_rsa"
+  if File.exists?(File.expand_path(file_loc))
+    config.vm.provision "file", source: file_loc, destination: file_loc
+  end
+
   file_loc = "~/.docker/access_token"
   if File.exists?(File.expand_path(file_loc))
     config.vm.provision "file",
