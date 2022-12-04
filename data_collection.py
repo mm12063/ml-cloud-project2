@@ -1,14 +1,12 @@
-import pandas as pd
 import pandas_datareader.data as web
 from datetime import date
 from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 import os
 
+NUM_YRS = 15
 DJIA_SYMBOLS = ['AXP', 'AMGN', 'AAPL', 'BA', 'CAT', 'CSCO', 'CVX', 'GS', 'HD', 'HON', 'IBM', 'INTC', 'JNJ', 'KO', 'JPM', 'MCD', 'MMM', 'MRK', 'MSFT', 'NKE', 'PG', 'TRV', 'UNH', 'CRM', 'VZ', 'V', 'WBA', 'WMT', 'DIS', 'DOW']
 DATA_SOURCE = 'yahoo'
-
-NUM_YRS = 15
 
 today = date.today()
 yesterday = today - timedelta(days=1)
