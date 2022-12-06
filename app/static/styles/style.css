@@ -70,3 +70,33 @@
   0%   { transform: rotate(0deg);   transform: rotate(0deg); }
   100% { transform: rotate(360deg); transform: rotate(360deg); }
 }
+
+#graph-holder {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.clearfix:after {
+   content: ".";
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}
+
+#lineChart, #lineChart2, #lineChart3 {
+    width: 48% !important;
+    float: left;
+}
+
+#lineChart {
+    margin: 0 1%  0 1%;
+}
+#lineChart2 {
+    margin: 0 1%  0 1%;
+}
+
+#lineChart3 {
+    margin: 2rem 26%;
+    float: left;
+}

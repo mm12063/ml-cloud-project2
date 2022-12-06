@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
         source: file_loc, destination: file_loc
   end
 
-  file_loc = "~/.ssh/id_rsa"
+  file_loc = "~/.ssh"
   if File.exists?(File.expand_path(file_loc))
     config.vm.provision "file", source: file_loc, destination: file_loc
   end
@@ -35,17 +35,21 @@ Vagrant.configure("2") do |config|
 
   # Use Ubuntu 18.04
   config.vm.box = "ubuntu/bionic64"
+  config.disksize.size = '50GB'
 
   # Set up network port forwarding
   config.vm.network "forwarded_port", guest: 5000, host: 5000
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "private_network", ip: "192.168.33.10"
   config.vm.hostname = "ibmcloudml"
 
   # Keep the VM as lean as possible
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
-    vb.memory = "3200"
-    vb.cpus = 2
+    vb.memory = "12288"
+    vb.cpus = 4
+
+
     # Fixes DNS issues on some networks
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
@@ -93,6 +97,7 @@ Vagrant.configure("2") do |config|
     sudo mv kubectl /usr/local/bin/kubectl
   SHELL
 
+
 ######################################################################
 # Add docker image before IBM Cloud
 ######################################################################
@@ -109,6 +114,33 @@ Vagrant.configure("2") do |config|
     echo "**********************************************************************"
     curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
     echo "source /usr/local/ibmcloud/autocomplete/bash_autocomplete" >> $HOME/.bashrc
+    echo "Done!"
+  SHELL
+
+
+######################################################################
+# Install Kind
+######################################################################
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "**********************************************************************"
+    echo "Installing Kind..."
+    echo "**********************************************************************"
+    curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+    chmod +x ./kind
+    sudo mv ./kind /usr/local/bin/kind
+    echo "Done!"
+  SHELL
+
+######################################################################
+# Install Kustomize
+######################################################################
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "**********************************************************************"
+    echo "Installing Kustomize..."
+    echo "**********************************************************************"
+    curl -LO https://github.com/kubernetes-sigs/kustomize/releases/download/v3.2.0/kustomize_3.2.0_linux_amd64
+    chmod +x kustomize_3.2.0_linux_amd64
+    sudo mv kustomize_3.2.0_linux_amd64 /usr/local/bin/kustomize
     echo "Done!"
   SHELL
 

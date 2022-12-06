@@ -6,6 +6,7 @@
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/reset.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -33,6 +34,11 @@
         <button id="ticker-selector-submit" type="submit">Submit</button>
     </div>
     <div id="response"></div>
+    <div id="graph-holder" class="clearfix">
+        <canvas id="lineChart" width="600" ></canvas>
+        <canvas id="lineChart2" width="600" ></canvas>
+        <canvas id="lineChart3" width="600" ></canvas>
+    </div>
 </div>
 
 <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
