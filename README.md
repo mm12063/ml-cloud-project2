@@ -1,4 +1,4 @@
-# ml_cloud_p2
+# Machine Learning and Cloud Project 2
 
 The files in this project are set out using a logical directory naming convention.
 
