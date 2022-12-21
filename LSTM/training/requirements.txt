@@ -1,0 +1,7 @@
+pandas
+pandas_datareader
+scikit-learn
+pandas
+numpy
+torch
+torchvision

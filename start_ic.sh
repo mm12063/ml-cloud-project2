@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export CLUSTER_NAME=kubeflow-v3-cluster
-
+export CLUSTER_NAME=kubeflow-vpc
+#export CLUSTER_NAME=stock-predictor-clust
 
 # Login to IBM Cloud
 make iclogin

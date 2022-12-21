@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment
+  labels:
+    app: ui
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app: ui
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: ui
+        image: mm12063/stock-predictor-ui:4.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+
+
+

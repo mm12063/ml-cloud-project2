@@ -8,4 +8,4 @@ ibm-manifests-160
 LSTM/Model/
 LSTM/Stocks/
 kustomize_3.2.0_linux_amd64.1
-manifests/
+__manifests/

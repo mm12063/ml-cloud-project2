@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, jsonify
-import Predictor
+from flask import Flask, render_template
 
 app = Flask(__name__,template_folder='static/templates')
 
@@ -39,16 +38,6 @@ TICKERS = {
 @app.route("/")
 def index():
     return render_template("index.html", tickers=TICKERS)
-
-
-@app.route("/prediction", methods=["GET"])
-def get_prediction():
-    ticker = request.args.get("ticker")
-    result = 'Ticker not passed to get_predictor()'
-    if ticker:
-        result = Predictor.get_ticker_prediction(ticker)
-
-    return jsonify(result)
 
 
 if __name__ == "__main__":

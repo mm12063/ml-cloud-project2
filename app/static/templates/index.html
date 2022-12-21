@@ -14,11 +14,12 @@
 <div id="main-wrapper">
     <div class="header-wrapper">
         <h1>MR M's</h1>
+        <h1>Dow Jones Industrial Average</h1>
         <h1>Stock Price Predictor</h1>
     </div>
 
     <div class="intro-wrapper">
-        <p>Please select one of the companies from the dropdown to receive a Buy/Sell/Hold recommendation from MR M.</p>
+        <p>Please select one of the DJIA companies from the dropdown to receive a Buy/Sell/Hold recommendation from MR M!</p>
     </div>
 
     <div class="form-input">
@@ -31,13 +32,21 @@
     </div>
 
     <div class="form-input">
-        <button id="ticker-selector-submit" type="submit">Submit</button>
+        <button id="ticker-selector-submit" type="submit">Show Me The Prediction!</button>
     </div>
-    <div id="response"></div>
+    <div id="response">
+        <div id="response-inner"></div>
+        <h2 class="buy">BUY!</h2>
+        <h2 class="sell">SELL!</h2>
+        <h2 class="hold">HOLD...</h2>
+    </div>
+    <div class="blurb-text"><p>How did we come this to recommendation..?</p></div>
+    <div id="rmse" class="blurb-text"></div>
+    <div id="confidence" class="blurb-text"></div>
     <div id="graph-holder" class="clearfix">
+        <canvas id="lineChart3" width="800" ></canvas>
         <canvas id="lineChart" width="600" ></canvas>
         <canvas id="lineChart2" width="600" ></canvas>
-        <canvas id="lineChart3" width="600" ></canvas>
     </div>
 </div>
 

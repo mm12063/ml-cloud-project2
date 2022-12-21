@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-inference
+  labels:
+    app: stock-infer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-infer
+  template:
+    metadata:
+      labels:
+        app: stock-infer
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: stock-infer
+        image: mm12063/stock-inference:6.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+          - name: stock-infer-pv
+            mountPath: /home/app
+      volumes:
+        - name: stock-infer-pv
+          persistentVolumeClaim:
+            claimName: stock-data-volume

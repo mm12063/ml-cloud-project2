@@ -5,4 +5,6 @@ torchvision
 matplotlib
 numpy
 tqdm
+minio
+yfinance
 scikit-learn

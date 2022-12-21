@@ -39,6 +39,7 @@ Vagrant.configure("2") do |config|
 
   # Set up network port forwarding
   config.vm.network "forwarded_port", guest: 5000, host: 5000
+  config.vm.network "forwarded_port", guest: 90, host: 9000
   config.vm.network "forwarded_port", guest: 8080, host: 8080
   config.vm.network "private_network", ip: "192.168.33.10"
   config.vm.hostname = "ibmcloudml"
@@ -48,7 +49,6 @@ Vagrant.configure("2") do |config|
     # Customize the amount of memory on the VM:
     vb.memory = "12288"
     vb.cpus = 4
-
 
     # Fixes DNS issues on some networks
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
