@@ -19,7 +19,7 @@ def step_get_latest_data(ticker: str):
     FULL_LOCAL_DIR = f"{ROOT_PATH}{DIR}"
 
     minio_client = Minio(
-        "172.21.107.4:9000",
+        "172.21.203.247:9000",
         access_key="minio",
         secret_key="minio123",
         secure=False
@@ -101,7 +101,7 @@ def step_pipeline_training(no_epochs: int, learning_rate: float, ticker: str):
             return out
 
     minio_client = Minio(
-        "172.21.107.4:9000",
+        "172.21.203.247:9000",
         access_key="minio",
         secret_key="minio123",
         secure=False
@@ -223,42 +223,6 @@ def step_pipeline_training(no_epochs: int, learning_rate: float, ticker: str):
         print(f"No CSV for {ticker}")
 
 
-def step_serve_model_to_inference(ticker: str):
-    from kubernetes import client
-    from kserve import KServeClient
-    from kserve import constants
-    from kserve import utils
-    from kserve import V1beta1InferenceService
-    from kserve import V1beta1InferenceServiceSpec
-    from kserve import V1beta1PredictorSpec
-    from kserve import V1beta1TFServingSpec
-    from datetime import datetime
-
-    namespace = utils.get_default_target_namespace()
-
-    name = f'model_{ticker}'
-    kserve_version = 'v1beta1'
-    api_version = constants.KSERVE_GROUP + '/' + kserve_version
-
-    isvc = V1beta1InferenceService(
-        api_version=api_version,
-        kind=constants.KSERVE_KIND,
-        metadata=client.V1ObjectMeta(
-            name=name,
-            namespace=namespace,
-            annotations={'sidecar.istio.io/inject': 'false'}
-        ),
-        spec=V1beta1InferenceServiceSpec(
-            predictor=V1beta1PredictorSpec(
-                service_account_name="sa-minio-kserve",
-                pytorch=(V1beta1TFServingSpec(
-                    storage_uri="s3://mlpipeline/models/"))))
-    )
-
-    KServe = KServeClient()
-    KServe.create(isvc)
-
-
 comp_get_latest_data = components.create_component_from_func(step_get_latest_data,
                                                              base_image="docker.io/mm12063/pand-dr-minio:2.0")
 comp_pipeline_training = components.create_component_from_func(step_pipeline_training,
@@ -270,11 +234,9 @@ comp_pipeline_training = components.create_component_from_func(step_pipeline_tra
     description='Train models to predict stock prices of DJIA companies'
 )
 def dija_pipeline(no_epochs: int, learning_rate: float, ticker: str):
-    step1 = step_get_latest_data(ticker)
-    step2 = step_pipeline_training(no_epochs, learning_rate, ticker)
-    step3 = step_serve_model_to_inference(ticker)
-    step2.after(step1)
-    step3.after(step2)
+    step0 = comp_get_latest_data(ticker)
+    step1 = comp_pipeline_training(no_epochs, learning_rate, ticker)
+    step1.after(step0)
 
 
 if __name__ == "__main__":
